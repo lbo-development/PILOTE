@@ -69,7 +69,18 @@ npm run test -w backend   # Vitest + Supertest
 
 ## Déploiement Railway
 
+Un seul service Railway sert à la fois l'API et le build du frontend (voir
+`railway.json` à la racine) : le backend Express expose l'API sous `/api/*` et
+sert les fichiers statiques du frontend buildé (`frontend/dist`) pour tout le
+reste, avec un fallback vers `index.html` pour le routing React Router.
+
 1. `railway login`
-2. `railway init` à la racine (ou dans chaque dossier frontend/backend pour deux services séparés)
-3. Configurer les variables d'environnement Supabase dans le dashboard Railway pour chaque service
-4. `railway up`
+2. `railway init` à la racine du dépôt (un seul service, **pas** un service par dossier)
+3. Dans le dashboard Railway, connecter le service au repo GitHub et activer le
+   déploiement automatique sur `main` (Settings → Source → Deploy on push)
+4. Configurer les variables d'environnement du service :
+   - `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` (backend)
+   - `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` (frontend, injectées au build)
+   - `VITE_API_URL=/api` (chemin relatif, même origine que le backend)
+   - `PORT` n'est pas à définir : Railway l'injecte automatiquement
+5. `railway up` (ou laisser le déploiement automatique se déclencher au prochain `git push`)
