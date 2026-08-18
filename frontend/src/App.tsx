@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import { Layout } from './components/Layout'
 import { Home } from './pages/Home'
+import { NaviresTest } from './pages/NaviresTest'
 import { NotFound } from './pages/NotFound'
 
 /**
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
+            <Route path="/navires-test" element={<NaviresTest />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
